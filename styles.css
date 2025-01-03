@@ -58,7 +58,7 @@ input[type="number"] {
 }
 
 button {
-    padding: 15px 20px;
+    padding: 10px 15px;
     margin-top: 20px;   /* Увеличен отступ сверху */
     background-color: #007bff;
     color: white;
