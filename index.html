@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Криптовалютный Портфель</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Криптовалютный Портфель</h1>
+        <nav>
+            <a href="#portfolio">Мой Портфель</a>
+            <a href="#calculator">Калькулятор Биткойна</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Раздел портфеля -->
+        <section id="portfolio">
+            <h2>Мой Портфель</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Криптовалюта</th>
+                        <th>Количество</th>
+                        <th>Текущая цена (USD)</th>
+                        <th>Общая стоимость (USD)</th>
+                    </tr>
+                </thead>
+                <tbody id="portfolioTable">
+                    <tr>
+                        <td>Bitcoin (BTC)</td>
+                        <td>0.5</td>
+                        <td id="btcPrice">0</td>
+                        <td id="btcTotal">0</td>
+                    </tr>
+                    <tr>
+                        <td>Ethereum (ETH)</td>
+                        <td>2</td>
+                        <td id="ethPrice">0</td>
+                        <td id="ethTotal">0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Калькулятор Биткойна -->
+        <section id="calculator">
+            <h2>Калькулятор Биткойна</h2>
+            <div>
+                <label for="btcAmount">Количество BTC:</label>
+                <input type="number" id="btcAmount" placeholder="Введите количество BTC">
+            </div>
+            <div>
+                <label for="btcRate">Курс BTC (в USD):</label>
+                <input type="number" id="btcRate" placeholder="Введите текущий курс">
+            </div>
+            <button onclick="calculateBTC()">Рассчитать</button>
+            <p id="calcResult">Результат: </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Криптовалютный Портфель</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
