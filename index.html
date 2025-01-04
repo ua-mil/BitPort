@@ -9,14 +9,10 @@
 <body>
     <header>
         <h1>Криптовалютный Портфель</h1>
-        <nav>
-            <a href="#portfolio">Мой Портфель</a>
-            <a href="#calculator">Калькулятор Биткойна</a>
-        </nav>
     </header>
 
     <main>
-        <!-- Раздел создания профиля -->
+        <!-- Раздел профиля -->
         <section id="profile">
             <h2>Создайте свой профиль</h2>
             <div>
@@ -41,7 +37,7 @@
                         <th>Прибыль/Убыток (USD)</th>
                     </tr>
                 </thead>
-                <tbody id="portfolioTable">
+                <tbody>
                     <tr>
                         <td>Bitcoin (BTC)</td>
                         <td><input type="number" id="btcQuantity" step="0.01"></td>
@@ -53,21 +49,6 @@
                 </tbody>
             </table>
             <button onclick="updatePortfolio()">Сохранить данные</button>
-        </section>
-
-        <!-- Калькулятор Биткойна -->
-        <section id="calculator">
-            <h2>Калькулятор Биткойна</h2>
-            <div>
-                <label for="btcAmount">Количество BTC:</label>
-                <input type="number" id="btcAmount" placeholder="Введите количество BTC">
-            </div>
-            <div>
-                <label for="btcRate">Курс BTC (в USD):</label>
-                <input type="number" id="btcRate" placeholder="Введите текущий курс">
-            </div>
-            <button onclick="calculateBTC()">Рассчитать</button>
-            <p id="calcResult">Результат: </p>
         </section>
     </main>
 
