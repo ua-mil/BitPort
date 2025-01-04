@@ -1,36 +1,29 @@
-/* Основные стили */
+/* Общие стили */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    background-color: #f5f5f5;
+    color: #333;
 }
 
 header {
-    background-color: #333;
-    color: #fff;
-    padding: 15px 20px;
+    background-color: #007bff;
+    color: white;
     text-align: center;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 24px;
-}
-
-nav a {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 10px;
-    font-size: 16px;
-}
-
-nav a:hover {
-    text-decoration: underline;
+    padding: 15px 0;
 }
 
 main {
     padding: 20px;
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px 0;
+    background-color: #007bff;
+    color: white;
 }
 
 /* Стили для таблицы */
@@ -56,29 +49,22 @@ input[type="number"] {
     font-size: 14px;
 }
 
+/* Кнопки */
 button {
-    padding: 15px 20px;
-    margin-top: 20px;   /* Увеличен отступ сверху */
     background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 5px;
+    padding: 10px 15px;
+    margin-top: 10px;
     cursor: pointer;
-    font-size: 16px;
+    border-radius: 5px;
 }
 
 button:hover {
     background-color: #0056b3;
 }
 
-footer {
-    text-align: center;
-    padding: 10px;
-    background-color: #f4f4f4;
-    margin-top: 20px;
-}
-
-/* Адаптация для Android-устройств и небольших экранов */
+/* Адаптация для небольших экранов */
 @media (max-width: 768px) {
     table {
         font-size: 14px;
