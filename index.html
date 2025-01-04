@@ -9,23 +9,22 @@
 <body>
     <header>
         <h1>Криптовалютный Портфель</h1>
+        <nav>
+            <a href="#portfolio">Мой Портфель</a>
+            <a href="#calculator">Калькулятор Биткойна</a>
+        </nav>
     </header>
 
     <main>
-        <!-- Раздел регистрации и входа -->
-        <section id="auth">
-            <h2>Войти или зарегистрироваться</h2>
+        <!-- Раздел создания профиля -->
+        <section id="profile">
+            <h2>Создайте свой профиль</h2>
             <div>
-                <label for="email">Email:</label>
-                <input type="email" id="email" placeholder="Введите email">
+                <label for="username">Имя пользователя:</label>
+                <input type="text" id="username" placeholder="Введите имя">
             </div>
-            <div>
-                <label for="password">Пароль:</label>
-                <input type="password" id="password" placeholder="Введите пароль">
-            </div>
-            <button onclick="register()">Зарегистрироваться</button>
-            <button onclick="login()">Войти</button>
-            <p id="authMessage"></p>
+            <button onclick="saveProfile()">Сохранить профиль</button>
+            <p id="welcomeMessage"></p>
         </section>
 
         <!-- Раздел портфеля -->
@@ -53,21 +52,28 @@
                     </tr>
                 </tbody>
             </table>
-            <button onclick="savePortfolio()">Сохранить данные</button>
-            <button onclick="logout()">Выйти</button>
+            <button onclick="updatePortfolio()">Сохранить данные</button>
+        </section>
+
+        <!-- Калькулятор Биткойна -->
+        <section id="calculator">
+            <h2>Калькулятор Биткойна</h2>
+            <div>
+                <label for="btcAmount">Количество BTC:</label>
+                <input type="number" id="btcAmount" placeholder="Введите количество BTC">
+            </div>
+            <div>
+                <label for="btcRate">Курс BTC (в USD):</label>
+                <input type="number" id="btcRate" placeholder="Введите текущий курс">
+            </div>
+            <button onclick="calculateBTC()">Рассчитать</button>
+            <p id="calcResult">Результат: </p>
         </section>
     </main>
 
     <footer>
         <p>© 2025 Криптовалютный Портфель</p>
     </footer>
-
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-database.js"></script>
-
-    <!-- Ваш файл с логикой -->
     <script src="script.js"></script>
 </body>
 </html>
