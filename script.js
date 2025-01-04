@@ -1,4 +1,4 @@
-// Функция для сохранения профиля
+// Сохранение профиля
 function saveProfile() {
     const username = document.getElementById('username').value;
 
@@ -15,7 +15,7 @@ function saveProfile() {
     loadPortfolio();
 }
 
-// Функция для загрузки данных профиля и портфеля
+// Загрузка профиля
 function loadProfile() {
     const username = localStorage.getItem('username');
 
@@ -28,7 +28,7 @@ function loadProfile() {
     }
 }
 
-// Функция для получения текущей цены Биткойна
+// Получение текущей цены Биткойна
 async function fetchCurrentPrice() {
     try {
         const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
@@ -43,7 +43,7 @@ async function fetchCurrentPrice() {
     }
 }
 
-// Функция для обновления данных портфеля
+// Сохранение данных портфеля
 async function updatePortfolio() {
     const quantity = parseFloat(document.getElementById('btcQuantity').value);
     const purchasePrice = parseFloat(document.getElementById('btcPurchasePrice').value);
@@ -65,7 +65,7 @@ async function updatePortfolio() {
     localStorage.setItem('portfolio', JSON.stringify(portfolioData));
 }
 
-// Функция для загрузки данных портфеля
+// Загрузка данных портфеля
 function loadPortfolio() {
     const portfolioData = JSON.parse(localStorage.getItem('portfolio'));
 
@@ -76,5 +76,5 @@ function loadPortfolio() {
     }
 }
 
-// Загрузка профиля при загрузке страницы
+// Загрузка профиля при запуске
 window.onload = loadProfile;
