@@ -25,30 +25,30 @@
 
         <!-- Раздел портфеля -->
         <section id="portfolio" style="display: none;">
-            <h2>Мой Портфель</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Криптовалюта</th>
-                        <th>Количество</th>
-                        <th>Цена покупки (USD)</th>
-                        <th>Текущая цена (USD)</th>
-                        <th>Общая стоимость (USD)</th>
-                        <th>Прибыль/Убыток (USD)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Bitcoin (BTC)</td>
-                        <td><input type="number" id="btcQuantity" step="0.01"></td>
-                        <td><input type="number" id="btcPurchasePrice"></td>
-                        <td id="btcCurrentPrice">Загрузка...</td>
-                        <td id="btcTotal">0</td>
-                        <td id="btcProfit">0</td>
-                    </tr>
-                </tbody>
-            </table>
-            <button onclick="updatePortfolio()">Сохранить данные</button>
+    <h2>Мой Портфель</h2>
+    <div class="vertical-table">
+        <div>
+            <label for="btcQuantity">Количество BTC:</label>
+            <input type="number" id="btcQuantity" step="0.01">
+        </div>
+        <div>
+            <label for="btcPurchasePrice">Цена покупки (USD):</label>
+            <input type="number" id="btcPurchasePrice">
+        </div>
+        <div>
+            <label>Текущая цена (USD):</label>
+            <p id="btcCurrentPrice">Загрузка...</p>
+        </div>
+        <div>
+            <label>Общая стоимость (USD):</label>
+            <p id="btcTotal">0</p>
+        </div>
+        <div>
+            <label>Прибыль/Убыток (USD):</label>
+            <p id="btcProfit">0</p>
+        </div>
+    </div>
+    <button onclick="updatePortfolio()">Сохранить данные</button>
         </section>
 
         <!-- Калькулятор Биткойн -->
