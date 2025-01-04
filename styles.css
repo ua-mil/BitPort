@@ -33,32 +33,31 @@ main {
     padding: 20px;
 }
 
+/* Стили для таблицы */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: left;
 }
 
-table th,
-table td {
+th, td {
     border: 1px solid #ddd;
     padding: 8px;
-    text-align: center;
+    word-wrap: break-word;
 }
 
-table th {
-    background-color: #f4f4f4;
-    font-weight: bold;
-}
-
+/* Поля ввода внутри таблицы */
 input[type="number"] {
-    width: 80%;
+    width: 100%;
+    box-sizing: border-box;
     padding: 5px;
     font-size: 14px;
 }
 
 button {
-    padding: 10px 15px;
+    padding: 15px 20px;
     margin-top: 20px;   /* Увеличен отступ сверху */
     background-color: #007bff;
     color: white;
@@ -81,59 +80,22 @@ footer {
 
 /* Адаптация для Android-устройств и небольших экранов */
 @media (max-width: 768px) {
-    header {
-        text-align: left;
-        padding: 15px;
-    }
-
-    nav {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        align-items: flex-start;
-    }
-
-    main {
-        padding: 10px;
-    }
-
-    table th,
-    table td {
-        font-size: 12px;
-        padding: 5px;
-    }
-
-    input[type="number"] {
-        width: 100%;
-        font-size: 12px;
-    }
-
-    button {
-        width: 100%;
+    table {
         font-size: 14px;
     }
 
-    footer {
+    input[type="number"] {
         font-size: 12px;
     }
 }
 
-/* Адаптация для очень маленьких экранов */
 @media (max-width: 480px) {
-    header h1 {
-        font-size: 20px;
-    }
-
-    nav a {
-        font-size: 14px;
-    }
-
-    table th,
-    table td {
-        font-size: 10px;
-    }
-
-    button {
+    th, td {
         font-size: 12px;
+    }
+
+    input[type="number"] {
+        padding: 3px;
+        font-size: 10px;
     }
 }
