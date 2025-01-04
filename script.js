@@ -78,3 +78,56 @@ function loadPortfolio() {
 
 // Загрузка профиля при запуске
 window.onload = loadProfile;
+// Калькулятор Биткойн
+function calculateBTC() {
+    const quantity = parseFloat(document.getElementById('calcQuantity').value);
+    const price = parseFloat(document.getElementById('calcPrice').value);
+
+    if (isNaN(quantity) || isNaN(price)) {
+        alert('Введите корректные данные.');
+        return;
+    }
+
+    const total = quantity * price;
+    document.getElementById('calcResult').textContent = `Общая стоимость: $${total.toFixed(2)}`;
+}
+
+// Показывать калькулятор после входа
+function showCalculator() {
+    document.getElementById('calculator').style.display = 'block';
+}
+
+// Модифицированный saveProfile
+function saveProfile() {
+    const username = document.getElementById('username').value;
+
+    if (!username) {
+        alert('Введите имя пользователя.');
+        return;
+    }
+
+    localStorage.setItem('username', username);
+    document.getElementById('welcomeMessage').textContent = `Добро пожаловать, ${username}!`;
+    document.getElementById('profile').style.display = 'none';
+    document.getElementById('portfolio').style.display = 'block';
+    showCalculator(); // Показываем калькулятор
+
+    loadPortfolio();
+}
+
+// Модифицированный loadProfile
+function loadProfile() {
+    const username = localStorage.getItem('username');
+
+    if (username) {
+        document.getElementById('welcomeMessage').textContent = `Добро пожаловать, ${username}!`;
+        document.getElementById('profile').style.display = 'none';
+        document.getElementById('portfolio').style.display = 'block';
+        showCalculator(); // Показываем калькулятор
+
+        loadPortfolio();
+    }
+}
+
+// Вызов при загрузке страницы
+window.onload = loadProfile;
