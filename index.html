@@ -10,11 +10,25 @@
     <header>
         <h1>Криптовалютный Портфель</h1>
         <nav>
+            <a href="#portfolio">Мой Портфель</a>
+            <a href="#calculator">Калькулятор Биткойна</a>
+        </nav>
     </header>
 
     <main>
+        <!-- Раздел создания профиля -->
+        <section id="profile">
+            <h2>Создайте свой профиль</h2>
+            <div>
+                <label for="username">Имя пользователя:</label>
+                <input type="text" id="username" placeholder="Введите имя">
+            </div>
+            <button onclick="saveProfile()">Сохранить профиль</button>
+            <p id="welcomeMessage"></p>
+        </section>
+
         <!-- Раздел портфеля -->
-        <section id="portfolio">
+        <section id="portfolio" style="display: none;">
             <h2>Мой Портфель</h2>
             <table>
                 <thead>
@@ -30,15 +44,15 @@
                 <tbody id="portfolioTable">
                     <tr>
                         <td>Bitcoin (BTC)</td>
-                        <td><input type="number" id="btcQuantity" value="0.5" step="0.01"></td>
-                        <td><input type="number" id="btcPurchasePrice" value="30000"></td>
+                        <td><input type="number" id="btcQuantity" step="0.01"></td>
+                        <td><input type="number" id="btcPurchasePrice"></td>
                         <td id="btcCurrentPrice">Загрузка...</td>
                         <td id="btcTotal">0</td>
                         <td id="btcProfit">0</td>
                     </tr>
                 </tbody>
             </table>
-            <button onclick="updatePortfolio()">Обновить</button>
+            <button onclick="updatePortfolio()">Сохранить данные</button>
         </section>
 
         <!-- Калькулятор Биткойна -->
