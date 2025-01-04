@@ -1,105 +1,56 @@
-// Firebase конфигурация (замените на свою из Firebase Console)
-const firebaseConfig = {
-  apiKey: "AIzaSyDVjmPF0S2FEqt2vr0YD5Yn3_WPtDc0NUQ",
-  authDomain: "crypto-port-3ea0b.firebaseapp.com",
-  projectId: "crypto-port-3ea0b",
-  storageBucket: "crypto-port-3ea0b.firebasestorage.app",
-  messagingSenderId: "183488303476",
-  appId: "1:183488303476:web:e77c9b244bc1fb2c599c21",
-  measurementId: "G-MXXERGB8T0"
-};
+// Функция для сохранения профиля
+function saveProfile() {
+    const username = document.getElementById('username').value;
 
+    if (!username) {
+        alert('Введите имя пользователя.');
+        return;
+    }
 
-// Инициализация Firebase
-const app = firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const database = firebase.database();
-
-// Регистрация пользователя
-function register() {
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-
-    auth.createUserWithEmailAndPassword(email, password)
-        .then(() => {
-            document.getElementById('authMessage').textContent = 'Успешно зарегистрирован!';
-            showPortfolio();
-        })
-        .catch(error => {
-            document.getElementById('authMessage').textContent = `Ошибка: ${error.message}`;
-        });
-}
-
-// Вход пользователя
-function login() {
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-
-    auth.signInWithEmailAndPassword(email, password)
-        .then(() => {
-            document.getElementById('authMessage').textContent = 'Успешный вход!';
-            showPortfolio();
-        })
-        .catch(error => {
-            document.getElementById('authMessage').textContent = `Ошибка: ${error.message}`;
-        });
-}
-
-// Выход пользователя
-function logout() {
-    auth.signOut().then(() => {
-        document.getElementById('portfolio').style.display = 'none';
-        document.getElementById('auth').style.display = 'block';
-        document.getElementById('authMessage').textContent = 'Вы вышли из системы.';
-    });
-}
-
-// Отображение портфеля
-function showPortfolio() {
-    document.getElementById('auth').style.display = 'none';
+    localStorage.setItem('username', username);
+    document.getElementById('welcomeMessage').textContent = `Добро пожаловать, ${username}!`;
+    document.getElementById('profile').style.display = 'none';
     document.getElementById('portfolio').style.display = 'block';
+
     loadPortfolio();
 }
 
-// Сохранение данных портфеля
-function savePortfolio() {
-    const user = auth.currentUser;
-    const quantity = document.getElementById('btcQuantity').value;
-    const purchasePrice = document.getElementById('btcPurchasePrice').value;
+// Функция для загрузки данных профиля и портфеля
+function loadProfile() {
+    const username = localStorage.getItem('username');
 
-    if (user) {
-        const portfolioData = { quantity, purchasePrice };
-        database.ref('users/' + user.uid + '/portfolio').set(portfolioData)
-            .then(() => alert('Данные сохранены!'))
-            .catch(error => alert('Ошибка сохранения данных: ' + error.message));
+    if (username) {
+        document.getElementById('welcomeMessage').textContent = `Добро пожаловать, ${username}!`;
+        document.getElementById('profile').style.display = 'none';
+        document.getElementById('portfolio').style.display = 'block';
+
+        loadPortfolio();
     }
 }
 
-// Загрузка данных портфеля
-function loadPortfolio() {
-    const user = auth.currentUser;
+// Функция для получения текущей цены Биткойна
+async function fetchCurrentPrice() {
+    try {
+        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+        const data = await response.json();
+        const btcPrice = data.bitcoin.usd;
 
-    if (user) {
-        database.ref('users/' + user.uid + '/portfolio').once('value')
-            .then(snapshot => {
-                const data = snapshot.val();
-                if (data) {
-                    document.getElementById('btcQuantity').value = data.quantity;
-                    document.getElementById('btcPurchasePrice').value = data.purchasePrice;
-                    updatePortfolio();
-                }
-            })
-            .catch(error => console.error('Ошибка загрузки данных: ', error));
+        document.getElementById('btcCurrentPrice').textContent = btcPrice.toFixed(2);
+        return btcPrice;
+    } catch (error) {
+        console.error('Ошибка получения текущей цены:', error);
+        return null;
     }
 }
 
-// Функция для обновления данных портфеля (с текущей ценой)
+// Функция для обновления данных портфеля
 async function updatePortfolio() {
     const quantity = parseFloat(document.getElementById('btcQuantity').value);
     const purchasePrice = parseFloat(document.getElementById('btcPurchasePrice').value);
     const currentPrice = await fetchCurrentPrice();
 
-    if (isNaN(quantity) || isNaN(purchasePrice) || !currentPrice) {
+    if (isNaN(quantity) || isNaN(purchasePrice) || currentPrice === null) {
+        alert('Пожалуйста, введите корректные данные.');
         return;
     }
 
@@ -108,23 +59,22 @@ async function updatePortfolio() {
 
     document.getElementById('btcTotal').textContent = total.toFixed(2);
     document.getElementById('btcProfit').textContent = profit.toFixed(2);
+
+    // Сохранение данных в localStorage
+    const portfolioData = { quantity, purchasePrice };
+    localStorage.setItem('portfolio', JSON.stringify(portfolioData));
 }
 
-// Получение текущей цены Биткойна
-async function fetchCurrentPrice() {
-    try {
-        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
-        const data = await response.json();
-        return data.bitcoin.usd;
-    } catch (error) {
-        console.error('Ошибка получения цены: ', error);
-        return null;
+// Функция для загрузки данных портфеля
+function loadPortfolio() {
+    const portfolioData = JSON.parse(localStorage.getItem('portfolio'));
+
+    if (portfolioData) {
+        document.getElementById('btcQuantity').value = portfolioData.quantity;
+        document.getElementById('btcPurchasePrice').value = portfolioData.purchasePrice;
+        updatePortfolio();
     }
 }
 
-// Проверка авторизации при загрузке
-auth.onAuthStateChanged(user => {
-    if (user) {
-        showPortfolio();
-    }
-});
+// Загрузка профиля при загрузке страницы
+window.onload = loadProfile;
