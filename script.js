@@ -1,139 +1,80 @@
-/* Основные стили */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+// Функция для сохранения профиля
+function saveProfile() {
+    const username = document.getElementById('username').value;
 
-header {
-    background-color: #333;
-    color: #fff;
-    padding: 15px 20px;
-    text-align: center;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 24px;
-}
-
-nav a {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 10px;
-    font-size: 16px;
-}
-
-nav a:hover {
-    text-decoration: underline;
-}
-
-main {
-    padding: 20px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-table th,
-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-}
-
-table th {
-    background-color: #f4f4f4;
-    font-weight: bold;
-}
-
-input[type="number"] {
-    width: 80%;
-    padding: 5px;
-    font-size: 14px;
-}
-
-button {
-    padding: 15px 20px;
-    margin-top: 20px;   /* Увеличен отступ сверху */
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-footer {
-    text-align: center;
-    padding: 10px;
-    background-color: #f4f4f4;
-    margin-top: 20px;
-}
-
-/* Адаптация для Android-устройств и небольших экранов */
-@media (max-width: 768px) {
-    header {
-        text-align: left;
-        padding: 15px;
+    if (!username) {
+        alert('Введите имя пользователя.');
+        return;
     }
 
-    nav {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        align-items: flex-start;
-    }
+    localStorage.setItem('username', username);
+    document.getElementById('welcomeMessage').textContent = `Добро пожаловать, ${username}!`;
+    document.getElementById('profile').style.display = 'none';
+    document.getElementById('portfolio').style.display = 'block';
 
-    main {
-        padding: 10px;
-    }
+    loadPortfolio();
+}
 
-    table th,
-    table td {
-        font-size: 12px;
-        padding: 5px;
-    }
+// Функция для загрузки данных профиля и портфеля
+function loadProfile() {
+    const username = localStorage.getItem('username');
 
-    input[type="number"] {
-        width: 90%;
-        font-size: 12px;
-    }
+    if (username) {
+        document.getElementById('welcomeMessage').textContent = `Добро пожаловать, ${username}!`;
+        document.getElementById('profile').style.display = 'none';
+        document.getElementById('portfolio').style.display = 'block';
 
-    button {
-        width: 100%;
-        font-size: 14px;
-    }
-
-    footer {
-        font-size: 12px;
+        loadPortfolio();
     }
 }
 
-/* Адаптация для очень маленьких экранов */
-@media (max-width: 480px) {
-    header h1 {
-        font-size: 20px;
+// Функция для получения текущей цены Биткойна
+async function fetchCurrentPrice() {
+    try {
+        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+        const data = await response.json();
+        const btcPrice = data.bitcoin.usd;
+
+        document.getElementById('btcCurrentPrice').textContent = btcPrice.toFixed(2);
+        return btcPrice;
+    } catch (error) {
+        console.error('Ошибка получения текущей цены:', error);
+        return null;
+    }
+}
+
+// Функция для обновления данных портфеля
+async function updatePortfolio() {
+    const quantity = parseFloat(document.getElementById('btcQuantity').value);
+    const purchasePrice = parseFloat(document.getElementById('btcPurchasePrice').value);
+    const currentPrice = await fetchCurrentPrice();
+
+    if (isNaN(quantity) || isNaN(purchasePrice) || currentPrice === null) {
+        alert('Пожалуйста, введите корректные данные.');
+        return;
     }
 
-    nav a {
-        font-size: 14px;
-    }
+    const total = quantity * currentPrice;
+    const profit = total - (quantity * purchasePrice);
 
-    table th,
-    table td {
-        font-size: 10px;
-    }
+    document.getElementById('btcTotal').textContent = total.toFixed(2);
+    document.getElementById('btcProfit').textContent = profit.toFixed(2);
 
-    button {
-        font-size: 12px;
+    // Сохранение данных в localStorage
+    const portfolioData = { quantity, purchasePrice };
+    localStorage.setItem('portfolio', JSON.stringify(portfolioData));
+}
+
+// Функция для загрузки данных портфеля
+function loadPortfolio() {
+    const portfolioData = JSON.parse(localStorage.getItem('portfolio'));
+
+    if (portfolioData) {
+        document.getElementById('btcQuantity').value = portfolioData.quantity;
+        document.getElementById('btcPurchasePrice').value = portfolioData.purchasePrice;
+        updatePortfolio();
     }
-    }
+}
+
+// Загрузка профиля при загрузке страницы
+window.onload = loadProfile;
